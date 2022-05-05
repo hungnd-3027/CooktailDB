@@ -1,11 +1,12 @@
 package com.example.cooktaildb
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.cooktaildb.databinding.ActivityMainBinding
+import com.example.cooktaildb.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 }
