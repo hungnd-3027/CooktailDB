@@ -1,8 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_eerie_black"
+    android:orientation="vertical"
     tools:context=".ui.home_fragment.HomeFragment">
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_home_screen"
+        android:textColor="@color/color_white"
+        android:padding="@dimen/dp_16"
+        android:textSize="@dimen/sp_22"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_solid_lightyellow_corner_16dp"
+        android:inputType="text"
+        android:padding="@dimen/dp_8"
+        android:hint="@string/msg_search_hint"
+        android:layout_margin="@dimen/dp_16"
+        android:drawableStart="@drawable/ic_search"
+        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextColor="@color/color_white"
+        app:tabIndicatorColor="@color/color_medium_purple"
+        android:background="@color/color_eerie_black"
+        app:tabMode="scrollable"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager2_drink"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_get_random_cocktail"
+        android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
+        android:textColor="@color/color_white"
+        android:drawablePadding="@dimen/dp_16"
+        android:drawableStart="@drawable/ic_button_random"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_8"/>
+</LinearLayout>

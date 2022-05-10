@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_filter">Filter</string>
     <string name="title_favorite">Favorite</string>
+    <string name="title_home_screen">ALL COCKTAIL RECIPES</string>
+    <string name="msg_search_hint">Search cocktail here</string>
+    <string name="msg_get_random_cocktail">Search cocktail here</string>
 </resources>
