@@ -5,5 +5,6 @@
     <string name="title_favorite">Favorite</string>
     <string name="title_home_screen">ALL COCKTAIL RECIPES</string>
     <string name="msg_search_hint">Search cocktail here</string>
-    <string name="msg_get_random_cocktail">Search cocktail here</string>
+    <string name="msg_get_random_cocktail">Get random cocktail</string>
+    <string name="msg_get_data_failed">Get data from api failed</string>
 </resources>

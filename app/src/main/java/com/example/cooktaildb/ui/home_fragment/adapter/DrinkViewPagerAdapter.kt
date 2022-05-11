@@ -1,23 +1,28 @@
 package com.example.cooktaildb.ui.home_fragment.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cooktaildb.R
 import com.example.cooktaildb.data.model.Category
+import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.databinding.ItemCategoryBinding
 
-class DrinkViewPagerAdapter : RecyclerView.Adapter<DrinkViewPagerAdapter.EventViewHolder>() {
+class DrinkViewPagerAdapter(val context: Context) :
+    RecyclerView.Adapter<DrinkViewPagerAdapter.EventViewHolder>() {
     private val listCategory = mutableListOf<Category>()
+    private var drinkAdapter = DrinkAdapter(context)
 
-    fun setData(listCategory: MutableList<Category>) {
+    fun setData(listCategory: List<Category>) {
         this.listCategory.apply {
             clear()
             addAll(listCategory)
         }
         notifyDataSetChanged()
+    }
+
+    fun setDrinkData(listDrink: MutableList<Drink>) {
+        this.drinkAdapter.setData(listDrink)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -34,12 +39,12 @@ class DrinkViewPagerAdapter : RecyclerView.Adapter<DrinkViewPagerAdapter.EventVi
         return listCategory.size
     }
 
-    class EventViewHolder(private val binding: ItemCategoryBinding) :
+    inner class EventViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(category: Category) {
             binding.apply {
-                textTest.text = category.strCategory
+                recyclerDrink.adapter = drinkAdapter
             }
         }
     }

@@ -4,7 +4,6 @@ import com.example.cooktaildb.ApiDrinkConstant
 import com.example.cooktaildb.ApiRespondConstant
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.source.IDrinkDataSource
-import com.example.cooktaildb.data.source.api.ApiConstants
 import com.example.cooktaildb.data.source.api.ApiURL
 import com.example.cooktaildb.data.source.utils.RemoteAsyncTask
 import com.example.cooktaildb.data.source.utils.httpConnection

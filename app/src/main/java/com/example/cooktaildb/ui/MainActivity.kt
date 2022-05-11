@@ -1,5 +1,7 @@
 package com.example.cooktaildb.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.example.cooktaildb.R
@@ -10,7 +12,9 @@ import com.example.cooktaildb.ui.filter_fragment.FilterFragment
 import com.example.cooktaildb.ui.home_fragment.HomeFragment
 import com.google.android.material.navigation.NavigationBarView
 
-class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate), NavigationBarView.OnItemSelectedListener{
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate),
+    NavigationBarView.OnItemSelectedListener {
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding?.bottomNavigationView?.setOnItemSelectedListener(this)
@@ -19,7 +23,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return  when(item.itemId){
+        return when (item.itemId) {
             R.id.menu_home -> {
                 replaceFragment(HomeFragment.newInstance(), R.id.frame_navigation, null)
                 true
@@ -34,5 +38,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             else -> false
         }
+    }
+
+    companion object {
+        fun getIntent(startActivity: Activity) = Intent(startActivity, MainActivity::class.java)
     }
 }

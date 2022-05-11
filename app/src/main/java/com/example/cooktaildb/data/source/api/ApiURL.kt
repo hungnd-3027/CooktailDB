@@ -20,4 +20,11 @@ object ApiURL {
         .appendQueryParameter(ParameterConstants.CATEGORY_PARAM, ValueConstants.LIST_VALUE)
         .toString()
 
+    fun searchDrink(strDrink: String) = Uri.Builder()
+        .scheme(ApiConstants.SCHEME)
+        .authority(ApiConstants.AUTHORITY)
+        .appendPath(ApiConstants.PATH)
+        .appendPath(ApiConstants.SEARCH)
+        .appendQueryParameter(ParameterConstants.SEARCH_PARAM, strDrink)
+        .toString()
 }

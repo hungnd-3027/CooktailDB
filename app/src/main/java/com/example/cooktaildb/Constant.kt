@@ -24,3 +24,7 @@ object ApiDrinkConstant {
         "strMeasure15")
     const val IMAGE_SOURCE = "strImageSource"
 }
+
+object Constant {
+    const val BUNDLE_ID_DRINK = "BUNDLE_ID_DRINK"
+}
