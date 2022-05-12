@@ -3,7 +3,6 @@ package com.example.cooktaildb.data.source.remote
 import com.example.cooktaildb.ApiDrinkConstant
 import com.example.cooktaildb.ApiRespondConstant
 import com.example.cooktaildb.data.model.Category
-import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.source.ICategoryDataSource
 import com.example.cooktaildb.data.source.api.ApiURL
 import com.example.cooktaildb.data.source.utils.RemoteAsyncTask

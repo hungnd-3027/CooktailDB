@@ -14,7 +14,7 @@ import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate),
     NavigationBarView.OnItemSelectedListener {
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding?.bottomNavigationView?.setOnItemSelectedListener(this)

@@ -9,21 +9,12 @@ import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.databinding.ItemCategoryBinding
 
 class DrinkViewPagerAdapter(val context: Context) :
-    RecyclerView.Adapter<DrinkViewPagerAdapter.EventViewHolder>() {
+    RecyclerView.Adapter<DrinkViewPagerAdapter.EventViewHolder>(),
+    DrinkAdapter.OnItemClickListener {
+
+    private var listener: OnItemClickListener? = null
     private val listCategory = mutableListOf<Category>()
     private var drinkAdapter = DrinkAdapter(context)
-
-    fun setData(listCategory: List<Category>) {
-        this.listCategory.apply {
-            clear()
-            addAll(listCategory)
-        }
-        notifyDataSetChanged()
-    }
-
-    fun setDrinkData(listDrink: MutableList<Drink>) {
-        this.drinkAdapter.setData(listDrink)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding =
@@ -39,6 +30,27 @@ class DrinkViewPagerAdapter(val context: Context) :
         return listCategory.size
     }
 
+    override fun onItemClick(idDrink: String) {
+        listener?.onItemClick(idDrink)
+    }
+
+    fun setData(listCategory: List<Category>) {
+        this.listCategory.apply {
+            clear()
+            addAll(listCategory)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
+    fun setDrinkData(listDrink: MutableList<Drink>) {
+        this.drinkAdapter.setData(listDrink)
+        drinkAdapter.setOnItemClickListener(this)
+    }
+
     inner class EventViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -47,5 +59,9 @@ class DrinkViewPagerAdapter(val context: Context) :
                 recyclerDrink.adapter = drinkAdapter
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(idDrink: String)
     }
 }

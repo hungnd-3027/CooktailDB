@@ -12,6 +12,17 @@ class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.Vie
     private val drinkList = mutableListOf<Drink>()
     var listener: OnItemClickListener? = null
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemDrinkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(drinkList[position])
+    }
+
+    override fun getItemCount(): Int = drinkList.size
+
     fun setData(drinkList: List<Drink>) {
         this.drinkList.apply {
             clear()
@@ -23,17 +34,6 @@ class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.Vie
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemDrinkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(drinkList[position])
-    }
-
-    override fun getItemCount(): Int = drinkList.size
 
     inner class ViewHolder(private val binding: ItemDrinkBinding) :
         RecyclerView.ViewHolder(binding.root) {
