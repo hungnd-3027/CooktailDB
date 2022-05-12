@@ -14,6 +14,7 @@ object ApiConstants {
 
 object ParameterConstants {
     const val CATEGORY_PARAM = "c"
+    const val SEARCH_PARAM = "s"
 }
 
 object ValueConstants {

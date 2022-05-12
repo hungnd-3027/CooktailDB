@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CooktailDB">
         <activity
+            android:name=".ui.detail.DetailDrinkActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -25,8 +33,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
     </application>
-
 </manifest>
