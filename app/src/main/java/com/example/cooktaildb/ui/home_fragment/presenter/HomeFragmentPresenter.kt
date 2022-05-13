@@ -13,13 +13,16 @@ class HomeFragmentPresenter(
 ) : HomeFragmentContract.Presenter {
 
     override fun getCategory() {
+        view.showProgressBar()
         repository.getCategories(object : OnRequestCallback<List<Category>> {
             override fun onSuccess(data: List<Category>) {
                 view.getListCategorySuccess(data)
+                view.hideProgressBar()
             }
 
             override fun onFailed() {
                 view.failed()
+                view.hideProgressBar()
             }
         })
     }

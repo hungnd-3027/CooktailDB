@@ -10,16 +10,34 @@ import com.example.cooktaildb.data.source.utils.httpConnection
 import org.json.JSONArray
 import org.json.JSONObject
 
-class RemoteDrinkDataSource: IDrinkDataSource {
+class RemoteDrinkDataSource : IDrinkDataSource {
+
     override fun getDrinks(category: String, callback: OnRequestCallback<List<Drink>>) {
-        RemoteAsyncTask(callback){
+        RemoteAsyncTask(callback) {
             getDrinks(category)
         }.execute()
     }
+
+    override fun searchDrink(strDrink: String, callback: OnRequestCallback<List<Drink>>) {
+        RemoteAsyncTask(callback) {
+            searchDrink(strDrink)
+        }.execute()
+    }
+
     private fun getDrinks(category: String): List<Drink> {
         val jsonObject = JSONObject(httpConnection(ApiURL.getDrinkList(category)))
         val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
         return getDrinkFromJson(jsonArray)
+    }
+
+    private fun searchDrink(strDrink: String): List<Drink> {
+        val jsonObject = JSONObject(httpConnection(ApiURL.searchDrink(strDrink)))
+        return try {
+            val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
+            getDrinkFromJson(jsonArray)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 
     private fun getDrinkFromJson(jsonArray: JSONArray): List<Drink> {
