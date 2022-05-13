@@ -12,7 +12,7 @@
         android:id="@+id/edit_text_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_corner_16dp_solid_silversand"
+        android:background="@drawable/bg_solid_silversand_bottom_corner_16dp"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/dp_16"
         android:hint="@string/msg_search_hint"

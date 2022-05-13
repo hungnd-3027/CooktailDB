@@ -61,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
-        android:drawableStart="@drawable/ic_button_random"
         android:drawablePadding="@dimen/dp_16"
         android:padding="@dimen/dp_8"
         android:text="@string/msg_get_random_cocktail"
@@ -70,7 +69,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:drawableStartCompat="@drawable/ic_button_random" />
 
     <ProgressBar
         android:id="@+id/progress_home"
