@@ -202,6 +202,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = FilterFragment()
