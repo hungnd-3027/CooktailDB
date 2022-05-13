@@ -4,8 +4,14 @@
     <string name="title_filter">Filter</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_home_screen">ALL COCKTAIL RECIPES</string>
+    <string name="title_ingredient">Ingredients</string>
+    <string name="title_instruction">Instruction</string>
     <string name="msg_search_hint">Search cocktail here</string>
     <string name="msg_get_random_cocktail">Get random cocktail</string>
     <string name="msg_get_data_failed">Get data from api failed</string>
     <string name="msg_nothing_found">Nothing found</string>
+    <string name="title_instructions">Instructions</string>
+    <string name="title_ingredients">Ingredients</string>
+    <string name="title_youtube">Youtube</string>
+    <string name="title_image_source">Image Source</string>
 </resources>
