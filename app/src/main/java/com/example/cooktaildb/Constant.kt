@@ -1,6 +1,5 @@
 package com.example.cooktaildb
 
-
 object ApiRespondConstant {
     const val DRINKS = "drinks"
 }
@@ -12,7 +11,7 @@ object ApiDrinkConstant {
     const val CATEGORY = "strCategory"
     const val ALCOHOLIC = "strAlcoholic"
     const val GLASS = "strGlass"
-    const val INSTRUCTION = "strInstruction"
+    const val INSTRUCTION = "strInstructions"
     const val THUMB = "strDrinkThumb"
     val INGREDIENTS = listOf("strIngredient1" , "strIngredient2" , "strIngredient3" , "strIngredient4" ,
         "strIngredient5" , "strIngredient6" , "strIngredient7" , "strIngredient8" , "strIngredient9" ,
@@ -26,5 +25,6 @@ object ApiDrinkConstant {
 }
 
 object Constant {
+    const val NULL = "null"
     const val BUNDLE_ID_DRINK = "BUNDLE_ID_DRINK"
 }

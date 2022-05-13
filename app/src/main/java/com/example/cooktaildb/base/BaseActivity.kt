@@ -16,6 +16,7 @@ abstract class BaseActivity<B: ViewBinding>(val bindingFactory: ActivityInflate<
         super.onCreate(savedInstanceState)
         _binding = bindingFactory(layoutInflater)
         setContentView(binding?.root)
+        initData()
     }
 
     override fun onDestroy() {
@@ -23,4 +24,5 @@ abstract class BaseActivity<B: ViewBinding>(val bindingFactory: ActivityInflate<
         _binding = null
     }
 
+    abstract fun initData()
 }

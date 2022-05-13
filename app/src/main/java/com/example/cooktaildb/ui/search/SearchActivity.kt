@@ -2,7 +2,6 @@ package com.example.cooktaildb.ui.search
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -28,9 +27,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
         DrinkAdapter(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun initData() {
         searchPresenter = SearchActivityPresenter(
             DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()),
             this

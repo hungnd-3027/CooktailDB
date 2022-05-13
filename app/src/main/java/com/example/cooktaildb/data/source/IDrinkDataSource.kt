@@ -9,4 +9,7 @@ interface IDrinkDataSource {
 
     fun searchDrink(strDrink: String, callback: OnRequestCallback<List<Drink>>)
 
+    fun getDrinkByID(idDrink: String, callback: OnRequestCallback<List<Drink>>)
+
+    fun getRandomDrink(callback: OnRequestCallback<List<Drink>>)
 }
