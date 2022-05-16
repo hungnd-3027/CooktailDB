@@ -12,4 +12,10 @@ interface IDrinkDataSource {
     fun getDrinkByID(idDrink: String, callback: OnRequestCallback<List<Drink>>)
 
     fun getRandomDrink(callback: OnRequestCallback<List<Drink>>)
+
+    fun getDrinkByAlcoholic(strAlcoholic: String, callback: OnRequestCallback<List<Drink>>)
+
+    fun getDrinkByGlass(strGlass: String, callback: OnRequestCallback<List<Drink>>)
+
+    fun getDrinkByFirstLetter(strFirstLetter: String, callback: OnRequestCallback<List<Drink>>)
 }

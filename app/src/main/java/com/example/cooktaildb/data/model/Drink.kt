@@ -12,4 +12,6 @@ data class Drink(
     var ingredients: List<String?> = listOf(),
     var measures: List<String?> = listOf(),
     var strImageSource: String? = ""
-)
+) {
+    var isFavorite = false
+}

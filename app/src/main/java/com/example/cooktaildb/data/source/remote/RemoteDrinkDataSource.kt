@@ -40,6 +40,33 @@ class RemoteDrinkDataSource : IDrinkDataSource {
         }.execute()
     }
 
+    override fun getDrinkByAlcoholic(
+        strAlcoholic: String,
+        callback: OnRequestCallback<List<Drink>>
+    ) {
+        val apiUrl = ApiURL.getDrinkByAlcoholic(strAlcoholic)
+        RemoteAsyncTask(callback) {
+            getData(apiUrl)
+        }.execute()
+    }
+
+    override fun getDrinkByGlass(strGlass: String, callback: OnRequestCallback<List<Drink>>) {
+        val apiUrl = ApiURL.getDrinkByGlass(strGlass)
+        RemoteAsyncTask(callback) {
+            getData(apiUrl)
+        }.execute()
+    }
+
+    override fun getDrinkByFirstLetter(
+        strFirstLetter: String,
+        callback: OnRequestCallback<List<Drink>>
+    ) {
+        val apiUrl = ApiURL.getDrinkByFirstLetter(strFirstLetter)
+        RemoteAsyncTask(callback) {
+            getData(apiUrl)
+        }.execute()
+    }
+
     private fun getData(apiUrl: String): List<Drink> {
         val jsonObject = JSONObject(httpConnection(apiUrl))
         return try {

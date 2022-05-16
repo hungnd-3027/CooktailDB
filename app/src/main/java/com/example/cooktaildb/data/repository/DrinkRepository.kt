@@ -7,6 +7,7 @@ import com.example.cooktaildb.data.source.remote.OnRequestCallback
 class DrinkRepository(
     private val iDrinkDataSource: IDrinkDataSource
 ) : IDrinkDataSource {
+
     override fun getDrinks(category: String, callback: OnRequestCallback<List<Drink>>) {
         iDrinkDataSource.getDrinks(category, callback)
     }
@@ -21,6 +22,24 @@ class DrinkRepository(
 
     override fun getRandomDrink(callback: OnRequestCallback<List<Drink>>) {
         iDrinkDataSource.getRandomDrink(callback)
+    }
+
+    override fun getDrinkByAlcoholic(
+        strAlcoholic: String,
+        callback: OnRequestCallback<List<Drink>>
+    ) {
+        iDrinkDataSource.getDrinkByAlcoholic(strAlcoholic, callback)
+    }
+
+    override fun getDrinkByGlass(strGlass: String, callback: OnRequestCallback<List<Drink>>) {
+        iDrinkDataSource.getDrinkByGlass(strGlass, callback)
+    }
+
+    override fun getDrinkByFirstLetter(
+        strFirstLetter: String,
+        callback: OnRequestCallback<List<Drink>>
+    ) {
+        iDrinkDataSource.getDrinkByFirstLetter(strFirstLetter, callback)
     }
 
     companion object {
