@@ -1,6 +1,6 @@
 package com.example.cooktaildb.data.model
 
-data class Drink (
+data class Drink(
     var idDrink: String? = "",
     var strDrink: String? = "",
     var strVideo: String? = "",
@@ -11,4 +11,5 @@ data class Drink (
     var strDrinkThumb: String? = "",
     var ingredients: List<String?> = listOf(),
     var measures: List<String?> = listOf(),
+    var strImageSource: String? = ""
 )

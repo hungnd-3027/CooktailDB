@@ -13,25 +13,35 @@ import org.json.JSONObject
 class RemoteDrinkDataSource : IDrinkDataSource {
 
     override fun getDrinks(category: String, callback: OnRequestCallback<List<Drink>>) {
+        val apiUrl = ApiURL.getDrinkList(category)
         RemoteAsyncTask(callback) {
-            getDrinks(category)
+            getData(apiUrl)
         }.execute()
     }
 
     override fun searchDrink(strDrink: String, callback: OnRequestCallback<List<Drink>>) {
+        val apiUrl = ApiURL.searchDrink(strDrink)
         RemoteAsyncTask(callback) {
-            searchDrink(strDrink)
+            getData(apiUrl)
         }.execute()
     }
 
-    private fun getDrinks(category: String): List<Drink> {
-        val jsonObject = JSONObject(httpConnection(ApiURL.getDrinkList(category)))
-        val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
-        return getDrinkFromJson(jsonArray)
+    override fun getDrinkByID(idDrink: String, callback: OnRequestCallback<List<Drink>>) {
+        val apiUrl = ApiURL.getDrinkByID(idDrink)
+        RemoteAsyncTask(callback) {
+            getData(apiUrl)
+        }.execute()
     }
 
-    private fun searchDrink(strDrink: String): List<Drink> {
-        val jsonObject = JSONObject(httpConnection(ApiURL.searchDrink(strDrink)))
+    override fun getRandomDrink(callback: OnRequestCallback<List<Drink>>) {
+        val apiUrl = ApiURL.getRandomDrink()
+        RemoteAsyncTask(callback) {
+            getData(apiUrl)
+        }.execute()
+    }
+
+    private fun getData(apiUrl: String): List<Drink> {
+        val jsonObject = JSONObject(httpConnection(apiUrl))
         return try {
             val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
             getDrinkFromJson(jsonArray)
@@ -47,8 +57,35 @@ class RemoteDrinkDataSource : IDrinkDataSource {
             val id = jsonDrink.optString(ApiDrinkConstant.ID)
             val name = jsonDrink.optString(ApiDrinkConstant.NAME)
             val thumb = jsonDrink.optString(ApiDrinkConstant.THUMB)
-
-            listDrinks.add(Drink(idDrink = id, strDrink = name, strDrinkThumb = thumb))
+            val video = jsonDrink.optString(ApiDrinkConstant.VIDEO)
+            val alcoholic = jsonDrink.optString(ApiDrinkConstant.ALCOHOLIC)
+            val glass = jsonDrink.optString(ApiDrinkConstant.GLASS)
+            val category = jsonDrink.optString(ApiDrinkConstant.CATEGORY)
+            val instruction = jsonDrink.optString(ApiDrinkConstant.INSTRUCTION)
+            val ingredients = ArrayList<String>()
+            val measures = ArrayList<String>()
+            val imageSource = jsonDrink.optString(ApiDrinkConstant.IMAGE_SOURCE)
+            ApiDrinkConstant.INGREDIENTS.forEach {
+                ingredients.add(jsonDrink.optString(it))
+            }
+            ApiDrinkConstant.MEASURES.forEach {
+                measures.add(jsonDrink.optString(it))
+            }
+            listDrinks.add(
+                Drink(
+                    id,
+                    name,
+                    video,
+                    category,
+                    alcoholic,
+                    glass,
+                    instruction,
+                    thumb,
+                    ingredients,
+                    measures,
+                    imageSource
+                )
+            )
         }
         return listDrinks
     }

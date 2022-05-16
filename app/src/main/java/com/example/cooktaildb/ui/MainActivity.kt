@@ -18,22 +18,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding?.bottomNavigationView?.setOnItemSelectedListener(this)
+    }
 
-        addFragment(HomeFragment.newInstance(), R.id.frame_navigation, null)
+    override fun initData() {
+        addFragment(HomeFragment.newInstance(), R.id.frame_navigation, FragmentConstant.HOME_FRAGMENT_TAG)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_home -> {
-                replaceFragment(HomeFragment.newInstance(), R.id.frame_navigation, null)
+                replaceFragment(HomeFragment.newInstance(), R.id.frame_navigation, FragmentConstant.HOME_FRAGMENT_TAG)
                 true
             }
             R.id.menu_filter -> {
-                replaceFragment(FilterFragment.newInstance(), R.id.frame_navigation, null)
+                replaceFragment(FilterFragment.newInstance(), R.id.frame_navigation, FragmentConstant.FILTER_FRAGMENT_TAG)
                 true
             }
             R.id.menu_favorite -> {
-                replaceFragment(FavoriteFragment.newInstance(), R.id.frame_navigation, null)
+                replaceFragment(FavoriteFragment.newInstance(), R.id.frame_navigation, FragmentConstant.FAVORITE_FRAGMENT_TAG)
                 true
             }
             else -> false

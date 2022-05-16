@@ -27,4 +27,19 @@ object ApiURL {
         .appendPath(ApiConstants.SEARCH)
         .appendQueryParameter(ParameterConstants.SEARCH_PARAM, strDrink)
         .toString()
+
+    fun getDrinkByID(idDrink: String) = Uri.Builder()
+        .scheme(ApiConstants.SCHEME)
+        .authority(ApiConstants.AUTHORITY)
+        .appendPath(ApiConstants.PATH)
+        .appendPath(ApiConstants.LOOKUP)
+        .appendQueryParameter(ParameterConstants.LOOKUP_PARAM, idDrink)
+        .toString()
+
+    fun getRandomDrink() = Uri.Builder()
+        .scheme(ApiConstants.SCHEME)
+        .authority(ApiConstants.AUTHORITY)
+        .appendPath(ApiConstants.PATH)
+        .appendPath(ApiConstants.RANDOM)
+        .toString()
 }

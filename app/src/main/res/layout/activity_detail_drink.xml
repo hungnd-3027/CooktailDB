@@ -36,7 +36,7 @@
                 app:titleTextColor="@color/color_white">
 
                 <ImageButton
-                    android:id="@+id/image_back_detail"
+                    android:id="@+id/button_back_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -49,7 +49,7 @@
                     android:src="@drawable/ic_back_detail" />
 
                 <ImageButton
-                    android:id="@+id/image_favorite_detail"
+                    android:id="@+id/button_favorite_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -69,21 +69,25 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_16"
                 app:cardBackgroundColor="@color/color_eerie_black"
                 app:cardCornerRadius="@dimen/dp_8"
-                app:cardElevation="@dimen/dp_5">
+                app:cardElevation="@dimen/dp_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_corner_16dp_stroke_silversand"
@@ -100,7 +104,10 @@
                         android:textAlignment="center"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/sp_16"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/text_drink_category"
@@ -110,12 +117,16 @@
                         android:text="@string/title_home"
                         android:textAlignment="center"
                         android:textColor="@color/color_pale_violet"
-                        android:textSize="@dimen/sp_14" />
-                </LinearLayout>
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_drink_name" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/text_title_ingredient"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_10"
@@ -123,34 +134,56 @@
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold"
-                app:drawableEndCompat="@drawable/ic_ingredient" />
+                android:layout_marginTop="@dimen/dp_10"
+                app:drawableEndCompat="@drawable/ic_ingredient"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_view_name" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
                 app:cardCornerRadius="@dimen/dp_10"
-                app:cardElevation="@dimen/dp_5">
+                app:cardElevation="@dimen/dp_5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_title_ingredient">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/text_ingredient"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
                         android:padding="@dimen/dp_10"
-                        android:textColor="@color/color_silver_sand"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:textAlignment="textStart"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintEnd_toStartOf="@id/text_measures"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/text_measures"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/text_title_instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_10"
@@ -158,66 +191,68 @@
                 android:text="@string/title_instructions"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/sp_16"
-                app:drawableEndCompat="@drawable/ic_alert" />
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_10"
+                app:drawableEndCompat="@drawable/ic_alert"
+                app:layout_constraintTop_toBottomOf="@id/card_view_ingredient" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
                 app:cardBackgroundColor="@color/color_light_yellow"
                 app:cardCornerRadius="@dimen/dp_10"
-                app:cardElevation="@dimen/dp_5">
+                app:cardElevation="@dimen/dp_5"
+                app:layout_constraintTop_toBottomOf="@id/text_title_instruction">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/text_instruction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_instruction"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
-                        android:padding="@dimen/dp_10"
-                        android:textColor="@color/color_black"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                    android:background="@drawable/bg_solid_eerieblack_stroke_silversand"
+                    android:padding="@dimen/dp_10"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/sp_16" />
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_youtube"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/bg_solid_red_corner_8dp"
+                android:text="@string/title_youtube"
+                android:textColor="@color/color_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/button_image_source"
+                app:layout_constraintTop_toBottomOf="@id/card_view_instruction" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button_youtube"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_solid_red_corner_8dp"
-                    android:text="@string/title_youtube"
-                    android:textColor="@color/color_white" />
 
-                <Space
-                    android:layout_width="@dimen/dp_10"
-                    android:layout_height="match_parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button_image_source"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_solid_brown_corner_8dp"
-                    android:text="@string/title_image_source"
-                    android:textColor="@color/color_white" />
-            </LinearLayout>
-        </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_image_source"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_solid_brown_corner_8dp"
+                android:text="@string/title_image_source"
+                android:textColor="@color/color_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/button_youtube"
+                app:layout_constraintRight_toRightOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

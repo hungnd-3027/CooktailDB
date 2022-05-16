@@ -15,6 +15,14 @@ class DrinkRepository(
         iDrinkDataSource.searchDrink(strDrink, callback)
     }
 
+    override fun getDrinkByID(idDrink: String, callback: OnRequestCallback<List<Drink>>) {
+        iDrinkDataSource.getDrinkByID(idDrink, callback)
+    }
+
+    override fun getRandomDrink(callback: OnRequestCallback<List<Drink>>) {
+        iDrinkDataSource.getRandomDrink(callback)
+    }
+
     companion object {
         private var instance: DrinkRepository? = null
         fun getInstance(
