@@ -1,5 +1,6 @@
 package com.example.cooktaildb.data.source.remote
 
+import android.util.Log
 import com.example.cooktaildb.ApiDrinkConstant
 import com.example.cooktaildb.ApiRespondConstant
 import com.example.cooktaildb.data.model.Category

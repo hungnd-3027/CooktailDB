@@ -2,11 +2,13 @@ package com.example.cooktaildb.data.repository
 
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.source.IDrinkDataSource
+import com.example.cooktaildb.data.source.local.utils.OnRequestLocalCallback
 import com.example.cooktaildb.data.source.remote.OnRequestCallback
 
 class DrinkRepository(
-    private val iDrinkDataSource: IDrinkDataSource
-) : IDrinkDataSource {
+    private val iDrinkDataSource: IDrinkDataSource,
+    private val local: IDrinkDataSource.Local
+) : IDrinkDataSource, IDrinkDataSource.Local {
 
     override fun getDrinks(category: String, callback: OnRequestCallback<List<Drink>>) {
         iDrinkDataSource.getDrinks(category, callback)
@@ -42,11 +44,28 @@ class DrinkRepository(
         iDrinkDataSource.getDrinkByFirstLetter(strFirstLetter, callback)
     }
 
+    override fun insertDrink(drink: Drink, callback: OnRequestLocalCallback<Unit>) {
+        local.insertDrink(drink, callback)
+    }
+
+    override fun deleteDrink(idDrink: String, callback: OnRequestLocalCallback<Unit>) {
+        local.deleteDrink(idDrink, callback)
+    }
+
+    override fun getAllDrink(callback: OnRequestLocalCallback<List<Drink>>) {
+        local.getAllDrink(callback)
+    }
+
+    override fun isFavorite(idDrink: String, callback: OnRequestLocalCallback<Boolean>) {
+        local.isFavorite(idDrink, callback)
+    }
+
     companion object {
         private var instance: DrinkRepository? = null
         fun getInstance(
-            iDrinkDataSource: IDrinkDataSource
+            iDrinkDataSource: IDrinkDataSource,
+            local: IDrinkDataSource.Local
         ) =
-            instance ?: DrinkRepository(iDrinkDataSource).also { instance = it }
+            instance ?: DrinkRepository(iDrinkDataSource, local).also { instance = it }
     }
 }

@@ -25,6 +25,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -104,4 +105,3 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

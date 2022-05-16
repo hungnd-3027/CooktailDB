@@ -1,6 +1,7 @@
 package com.example.cooktaildb.data.source
 
 import com.example.cooktaildb.data.model.Drink
+import com.example.cooktaildb.data.source.local.utils.OnRequestLocalCallback
 import com.example.cooktaildb.data.source.remote.OnRequestCallback
 
 interface IDrinkDataSource {
@@ -18,4 +19,11 @@ interface IDrinkDataSource {
     fun getDrinkByGlass(strGlass: String, callback: OnRequestCallback<List<Drink>>)
 
     fun getDrinkByFirstLetter(strFirstLetter: String, callback: OnRequestCallback<List<Drink>>)
+
+    interface Local {
+        fun insertDrink(drink: Drink, callback: OnRequestLocalCallback<Unit>)
+        fun deleteDrink(idDrink: String, callback: OnRequestLocalCallback<Unit>)
+        fun getAllDrink(callback: OnRequestLocalCallback<List<Drink>>)
+        fun isFavorite(idDrink: String, callback: OnRequestLocalCallback<Boolean>)
+    }
 }

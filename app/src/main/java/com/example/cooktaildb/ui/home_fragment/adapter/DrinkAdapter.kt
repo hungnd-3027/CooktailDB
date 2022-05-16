@@ -1,14 +1,18 @@
 package com.example.cooktaildb.ui.home_fragment.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cooktaildb.R
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.databinding.ItemDrinkBinding
 
 class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.ViewHolder>() {
+
     private val drinkList = mutableListOf<Drink>()
     var listener: OnItemClickListener? = null
 
@@ -37,6 +41,7 @@ class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.Vie
 
     inner class ViewHolder(private val binding: ItemDrinkBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(drink: Drink) {
             binding.apply {
                 Glide.with(context).load(drink.strDrinkThumb).into(imageDrink)
@@ -44,11 +49,27 @@ class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.Vie
                 root.setOnClickListener {
                     drink.idDrink?.let { idDrink -> listener?.onItemClick(idDrink) }
                 }
+                buttonFavorite.apply {
+                    setImageResource(if (drink.isFavorite) R.drawable.ic_star_yellow else R.drawable.ic_star_detail)
+                    setOnClickListener {
+                        drink.idDrink?.let { idDrink ->
+                            listener?.onFavoriteClick(idDrink, drink.isFavorite, adapterPosition)
+                        }
+                        if (drink.isFavorite) {
+                            drink.isFavorite = false
+                            setImageResource(R.drawable.ic_star_detail)
+                        } else {
+                            drink.isFavorite = true
+                            setImageResource(R.drawable.ic_star_yellow)
+                        }
+                    }
+                }
             }
         }
     }
 
     interface OnItemClickListener {
         fun onItemClick(idDrink: String)
+        fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int)
     }
 }
