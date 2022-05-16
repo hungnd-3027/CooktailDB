@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.CooktailDB" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_purple_500</item>
+        <item name="colorPrimary">@color/color_medium_purple</item>
         <item name="colorPrimaryVariant">@color/color_black</item>
         <item name="colorOnPrimary">@color/color_white</item>
         <!-- Secondary brand color. -->
@@ -16,5 +16,12 @@
 
     <style name="SplashscreenTheme" parent="Theme.CooktailDB">
         <item name="android:windowBackground">@drawable/bg_splashscreen</item>
+    </style>
+
+    <style name="bottomCornerRadius">
+        <item name="cornerSizeBottomLeft">@dimen/dp_20</item>
+        <item name="cornerSizeBottomRight">@dimen/dp_20</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
     </style>
 </resources>
