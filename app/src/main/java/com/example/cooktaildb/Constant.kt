@@ -28,3 +28,9 @@ object Constant {
     const val NULL = "null"
     const val BUNDLE_ID_DRINK = "BUNDLE_ID_DRINK"
 }
+
+object FilterType {
+    const val CATEGORY_FILTER = 1
+    const val ALCOHOLIC_FILTER = 2
+    const val GLASS_FILTER = 3
+}

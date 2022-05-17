@@ -16,6 +16,9 @@ object ParameterConstants {
     const val CATEGORY_PARAM = "c"
     const val SEARCH_PARAM = "s"
     const val LOOKUP_PARAM = "i"
+    const val ALCOHOLIC_PARAM = "a"
+    const val GLASS_PARAM = "g"
+    const val FIRST_LETTER_PARAM = "f"
 }
 
 object ValueConstants {
