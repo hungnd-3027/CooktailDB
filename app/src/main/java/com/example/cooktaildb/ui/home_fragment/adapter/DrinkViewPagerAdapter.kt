@@ -23,7 +23,7 @@ class DrinkViewPagerAdapter(val context: Context) :
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(listCategory[position])
+        holder.bind()
     }
 
     override fun getItemCount(): Int {
@@ -32,6 +32,10 @@ class DrinkViewPagerAdapter(val context: Context) :
 
     override fun onItemClick(idDrink: String) {
         listener?.onItemClick(idDrink)
+    }
+
+    override fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int) {
+        listener?.onFavoriteClick(idDrink, isFavorite, position)
     }
 
     fun setData(listCategory: List<Category>) {
@@ -54,7 +58,7 @@ class DrinkViewPagerAdapter(val context: Context) :
     inner class EventViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(category: Category) {
+        fun bind() {
             binding.apply {
                 recyclerDrink.adapter = drinkAdapter
             }
@@ -63,5 +67,6 @@ class DrinkViewPagerAdapter(val context: Context) :
 
     interface OnItemClickListener {
         fun onItemClick(idDrink: String)
+        fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int)
     }
 }
