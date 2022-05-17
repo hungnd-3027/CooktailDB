@@ -31,4 +31,6 @@
     <string name="msg_enter_letter">You have to enter one letter</string>
     <string name="msg_add_drink_to_favorite">Add drink to favorite</string>
     <string name="msg_delete_drink_from_favorite">Delete drink from favorite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

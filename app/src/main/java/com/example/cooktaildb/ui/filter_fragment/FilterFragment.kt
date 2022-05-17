@@ -22,6 +22,9 @@ import com.example.cooktaildb.data.repository.AlcoholicRepository
 import com.example.cooktaildb.data.repository.CategoryRepository
 import com.example.cooktaildb.data.repository.DrinkRepository
 import com.example.cooktaildb.data.repository.GlassRepository
+import com.example.cooktaildb.data.source.local.DatabaseHelper
+import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
+import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteAlcoholicDataSource
 import com.example.cooktaildb.data.source.remote.RemoteCategoryDataSource
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
@@ -40,6 +43,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
     private var categoryList = mutableListOf<String>()
     private var alcoholicList = mutableListOf<String>()
     private var glassList = mutableListOf<String>()
+    private val drinks = mutableListOf<Drink>()
     private val drinkAdapter: DrinkAdapter? by lazy {
         context?.let { DrinkAdapter(it) }
     }
@@ -51,7 +55,13 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
             CategoryRepository.getInstance(RemoteCategoryDataSource.getInstance()),
             AlcoholicRepository.getInstance(RemoteAlcoholicDataSource.getInstance()),
             GlassRepository.getInstance(RemoteGlassDataSource.getInstance()),
-            DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()), this
+            DrinkRepository.getInstance(
+                RemoteDrinkDataSource.getInstance(),
+                LocalDrinkDataSource.getInstance(
+                    FavoriteDrinkDAOImpl.getInstance(DatabaseHelper.getInstance(context))
+                )
+            ),
+            this
         )
         presenter?.apply {
             getAlcoholic()
@@ -83,19 +93,40 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
     }
 
     override fun getDrinkByCategorySuccess(drinks: List<Drink>) {
+        setDrinks(drinks)
         drinkAdapter?.setData(drinks.toMutableList())
     }
 
     override fun getDrinkByAlcoholicSuccess(drinks: List<Drink>) {
+        setDrinks(drinks)
         drinkAdapter?.setData(drinks.toMutableList())
     }
 
     override fun getDrinkByGlassSuccess(drinks: List<Drink>) {
+        setDrinks(drinks)
         drinkAdapter?.setData(drinks.toMutableList())
     }
 
     override fun getDrinkByFirstLetterSuccess(drinks: List<Drink>) {
+        setDrinks(drinks)
         drinkAdapter?.setData(drinks.toMutableList())
+    }
+
+    override fun insertDrinkSuccess() {
+        Toast.makeText(context, R.string.msg_add_drink_to_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getDrinkByIDSuccess(drinks: List<Drink>) {
+        presenter?.insertDrink(drinks.first())
+    }
+
+    override fun isFavorite(result: Boolean, position: Int) {
+        drinks[position].isFavorite = result
+        drinkAdapter?.setData(drinks)
+    }
+
+    override fun deleteDrinkSuccess() {
+        Toast.makeText(context, R.string.msg_delete_drink_from_favorite, Toast.LENGTH_SHORT).show()
     }
 
     override fun showProgressBar() {
@@ -119,6 +150,15 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
             }
         }
     }
+
+    override fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int) {
+        if (isFavorite) {
+            presenter?.deleteDrink(idDrink)
+        } else {
+            presenter?.getDrinkByID(idDrink)
+        }
+    }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -199,6 +239,18 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
                 }
             }
             show()
+        }
+    }
+
+    private fun setDrinks(drinks: List<Drink>) {
+        this.drinks.clear()
+        this.drinks.addAll(drinks)
+        checkFavorite(drinks)
+    }
+
+    private fun checkFavorite(drinks: List<Drink>) {
+        drinks.forEachIndexed { index, drink ->
+            drink.idDrink?.let { presenter?.isFavorite(it, index) }
         }
     }
 

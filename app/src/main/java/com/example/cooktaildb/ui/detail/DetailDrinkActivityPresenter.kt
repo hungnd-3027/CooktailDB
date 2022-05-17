@@ -2,6 +2,7 @@ package com.example.cooktaildb.ui.detail
 
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.repository.DrinkRepository
+import com.example.cooktaildb.data.source.local.utils.OnRequestLocalCallback
 import com.example.cooktaildb.data.source.remote.OnRequestCallback
 
 class DetailDrinkActivityPresenter(
@@ -35,6 +36,42 @@ class DetailDrinkActivityPresenter(
             override fun onFailed() {
                 view.showError()
                 view.hideProgressBar()
+            }
+        })
+    }
+
+    override fun insertDrink(drink: Drink) {
+        repository.insertDrink(drink, object : OnRequestLocalCallback<Unit> {
+            override fun onSuccess(data: Unit) {
+                view.insertDrinkSuccess()
+            }
+
+            override fun onFailed() {
+                view.showError()
+            }
+        })
+    }
+
+    override fun deleteDrink(idDrink: String) {
+        repository.deleteDrink(idDrink, object : OnRequestLocalCallback<Unit> {
+            override fun onSuccess(data: Unit) {
+                view.deleteDrinkSuccess()
+            }
+
+            override fun onFailed() {
+                view.showError()
+            }
+        })
+    }
+
+    override fun isFavorite(idDrink: String) {
+        repository.isFavorite(idDrink, object : OnRequestLocalCallback<Boolean> {
+            override fun onSuccess(data: Boolean) {
+                view.isFavorite(data)
+            }
+
+            override fun onFailed() {
+                view.showError()
             }
         })
     }

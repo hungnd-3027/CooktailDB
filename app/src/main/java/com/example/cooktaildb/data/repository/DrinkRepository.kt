@@ -63,9 +63,9 @@ class DrinkRepository(
     companion object {
         private var instance: DrinkRepository? = null
         fun getInstance(
-            iDrinkDataSource: IDrinkDataSource,
+            remote: IDrinkDataSource.Remote,
             local: IDrinkDataSource.Local
         ) =
-            instance ?: DrinkRepository(iDrinkDataSource, local).also { instance = it }
+            instance ?: DrinkRepository(remote, local).also { instance = it }
     }
 }

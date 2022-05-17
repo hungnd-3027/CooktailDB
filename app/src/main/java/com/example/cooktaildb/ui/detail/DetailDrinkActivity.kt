@@ -11,6 +11,9 @@ import com.example.cooktaildb.R
 import com.example.cooktaildb.base.BaseActivity
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.repository.DrinkRepository
+import com.example.cooktaildb.data.source.local.DatabaseHelper
+import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
+import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
 import com.example.cooktaildb.databinding.ActivityDetailDrinkBinding
 
@@ -22,10 +25,18 @@ class DetailDrinkActivity :
     private var detailDrinkActivityPresenter: DetailDrinkActivityPresenter? = null
     private var mYoutubeLink: Uri? = null
     private var mImageResourceLink: Uri? = null
+    private var drink: Drink? = null
+    private var isFavorite: Boolean? = null
 
     override fun initData() {
         detailDrinkActivityPresenter = DetailDrinkActivityPresenter(
-            DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()), this
+            DrinkRepository.getInstance(
+                RemoteDrinkDataSource.getInstance(),
+                LocalDrinkDataSource.getInstance(
+                    FavoriteDrinkDAOImpl.getInstance(DatabaseHelper.getInstance(this))
+                )
+            ),
+            this
         )
 
         val bundle = intent.extras
@@ -35,20 +46,42 @@ class DetailDrinkActivity :
         } else {
             detailDrinkActivityPresenter?.getRandomDrink()
         }
-
+        idDrink?.let { detailDrinkActivityPresenter?.isFavorite(it) }
         binding?.apply {
             buttonYoutube.setOnClickListener(this@DetailDrinkActivity)
             buttonImageSource.setOnClickListener(this@DetailDrinkActivity)
             buttonBackDetail.setOnClickListener(this@DetailDrinkActivity)
+            buttonFavoriteDetail.setOnClickListener(this@DetailDrinkActivity)
         }
     }
 
     override fun getDrinkByIDSuccess(drinks: List<Drink>) {
-        bindData(drinks.first())
+        drink = drinks.first()
+        bindData(drinks[0])
     }
 
     override fun getRandomDrinkSuccess(drinks: List<Drink>) {
-        bindData(drinks.first())
+        drink = drinks.first()
+        bindData(drinks[0])
+    }
+
+    override fun insertDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_add_drink_to_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun deleteDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_delete_drink_from_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun isFavorite(result: Boolean) {
+        isFavorite = result
+        if (result) {
+            binding?.buttonFavoriteDetail?.setImageResource(R.drawable.ic_star_detail)
+            drink?.idDrink?.let { detailDrinkActivityPresenter?.deleteDrink(it) }
+        } else {
+            binding?.buttonFavoriteDetail?.setImageResource(R.drawable.ic_star_yellow)
+            drink?.let { detailDrinkActivityPresenter?.insertDrink(it) }
+        }
     }
 
     override fun showProgressBar() {
@@ -76,6 +109,11 @@ class DetailDrinkActivity :
                 }
             }
             R.id.button_back_detail -> finish()
+            R.id.button_favorite_detail -> {
+                binding?.buttonFavoriteDetail?.apply {
+                    setImageResource(if (isFavorite == true) R.drawable.ic_star_detail else R.drawable.ic_star_yellow)
+                }
+            }
         }
     }
 
