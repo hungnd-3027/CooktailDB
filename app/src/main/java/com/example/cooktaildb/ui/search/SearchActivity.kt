@@ -13,6 +13,9 @@ import com.example.cooktaildb.R
 import com.example.cooktaildb.base.BaseActivity
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.repository.DrinkRepository
+import com.example.cooktaildb.data.source.local.DatabaseHelper
+import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
+import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
 import com.example.cooktaildb.databinding.ActivitySearchBinding
 import com.example.cooktaildb.ui.detail.DetailDrinkActivity
@@ -29,7 +32,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
 
     override fun initData() {
         searchPresenter = SearchActivityPresenter(
-            DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()),
+            DrinkRepository.getInstance(
+                RemoteDrinkDataSource.getInstance(),
+                LocalDrinkDataSource.getInstance(
+                    FavoriteDrinkDAOImpl.getInstance(DatabaseHelper.getInstance(this))
+                )
+            ),
             this
         )
 
@@ -85,6 +93,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
             intent.putExtras(bundle)
             startActivity(intent)
         }
+    }
+
+    override fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int) {
+
     }
 
     companion object {

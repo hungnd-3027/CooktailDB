@@ -11,6 +11,9 @@ import com.example.cooktaildb.R
 import com.example.cooktaildb.base.BaseActivity
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.data.repository.DrinkRepository
+import com.example.cooktaildb.data.source.local.DatabaseHelper
+import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
+import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
 import com.example.cooktaildb.databinding.ActivityDetailDrinkBinding
 
@@ -25,7 +28,13 @@ class DetailDrinkActivity :
 
     override fun initData() {
         detailDrinkActivityPresenter = DetailDrinkActivityPresenter(
-            DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()), this
+            DrinkRepository.getInstance(
+                RemoteDrinkDataSource.getInstance(),
+                LocalDrinkDataSource.getInstance(
+                    FavoriteDrinkDAOImpl.getInstance(DatabaseHelper.getInstance(this))
+                )
+            ),
+            this
         )
 
         val bundle = intent.extras

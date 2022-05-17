@@ -10,7 +10,7 @@ import com.example.cooktaildb.data.source.utils.httpConnection
 import org.json.JSONArray
 import org.json.JSONObject
 
-class RemoteDrinkDataSource : IDrinkDataSource {
+class RemoteDrinkDataSource : IDrinkDataSource.Remote {
 
     override fun getDrinks(category: String, callback: OnRequestCallback<List<Drink>>) {
         val apiUrl = ApiURL.getDrinkList(category)
