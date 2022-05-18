@@ -22,6 +22,9 @@ import com.example.cooktaildb.data.repository.AlcoholicRepository
 import com.example.cooktaildb.data.repository.CategoryRepository
 import com.example.cooktaildb.data.repository.DrinkRepository
 import com.example.cooktaildb.data.repository.GlassRepository
+import com.example.cooktaildb.data.source.local.DatabaseHelper
+import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
+import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteAlcoholicDataSource
 import com.example.cooktaildb.data.source.remote.RemoteCategoryDataSource
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
@@ -51,7 +54,13 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
             CategoryRepository.getInstance(RemoteCategoryDataSource.getInstance()),
             AlcoholicRepository.getInstance(RemoteAlcoholicDataSource.getInstance()),
             GlassRepository.getInstance(RemoteGlassDataSource.getInstance()),
-            DrinkRepository.getInstance(RemoteDrinkDataSource.getInstance()), this
+            DrinkRepository.getInstance(
+                RemoteDrinkDataSource.getInstance(),
+                LocalDrinkDataSource.getInstance(
+                    FavoriteDrinkDAOImpl.getInstance(DatabaseHelper.getInstance(context))
+                )
+            ),
+            this
         )
         presenter?.apply {
             getAlcoholic()
@@ -118,6 +127,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int) {
+
     }
 
     override fun onClick(p0: View?) {

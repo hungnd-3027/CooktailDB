@@ -20,6 +20,7 @@
     <string name="title_filter_by_glass">Filter drink by glass: </string>
     <string name="title_filter_by_first_letter">Filter drink by first letter: </string>
     <string name="title_filter_dialog">Filter Dialog</string>
+    <string name="title_favorite_screen">Favorite Cocktail</string>
     <string name="msg_search_hint">Search cocktail here</string>
     <string name="msg_get_random_cocktail">Get random cocktail</string>
     <string name="msg_get_data_failed">Get data from api failed</string>
@@ -29,4 +30,5 @@
     <string name="msg_cancel">Cancel</string>
     <string name="msg_enter_letter">You have to enter one letter</string>
     <string name="msg_add_drink_to_favorite">Add drink to favorite</string>
+    <string name="msg_delete_drink_from_favorite">Delete drink from favorite</string>
 </resources>
