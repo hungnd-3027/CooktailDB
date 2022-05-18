@@ -37,6 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:focusable="true"
+                android:clickable="true"
                 android:background="@android:color/transparent"
                 android:padding="@dimen/dp_8"
                 android:paddingStart="@dimen/dp_16"

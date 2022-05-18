@@ -44,6 +44,7 @@ class DetailDrinkActivityPresenter(
         repository.insertDrink(drink, object : OnRequestLocalCallback<Unit> {
             override fun onSuccess(data: Unit) {
                 view.insertDrinkSuccess()
+                drink.idDrink?.let { isFavorite(it) }
             }
 
             override fun onFailed() {
@@ -56,6 +57,7 @@ class DetailDrinkActivityPresenter(
         repository.deleteDrink(idDrink, object : OnRequestLocalCallback<Unit> {
             override fun onSuccess(data: Unit) {
                 view.deleteDrinkSuccess()
+                isFavorite(idDrink)
             }
 
             override fun onFailed() {

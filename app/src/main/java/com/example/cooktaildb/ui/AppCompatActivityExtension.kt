@@ -11,10 +11,24 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int, backStackTag
     }
 }
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, backStackTag: String? = null) {
+fun AppCompatActivity.replaceFragment(
+    fragment: Fragment,
+    frameId: Int,
+    backStackTag: String? = null
+) {
     supportFragmentManager.beginTransaction().apply {
         replace(frameId, fragment)
         addToBackStack(backStackTag)
+        commit()
+    }
+}
+
+fun AppCompatActivity.replaceAtRoot(
+    fragment: Fragment,
+    frameId: Int,
+){
+    supportFragmentManager.beginTransaction().apply {
+        replace(frameId, fragment)
         commit()
     }
 }

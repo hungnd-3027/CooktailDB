@@ -20,8 +20,12 @@ class RemoteAlcoholicDataSource : IAlcoholicDataSource {
 
     private fun getAlcoholicList(): List<Alcoholic> {
         val jsonObject = JSONObject(httpConnection(ApiURL.getAlcoholicList()))
-        val jsonArray = jsonObject.optJSONArray(ApiRespondConstant.DRINKS)
-        return getAlcoholicFromJson(jsonArray)
+        return try {
+            val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
+            getAlcoholicFromJson(jsonArray)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 
     private fun getAlcoholicFromJson(jsonArray: JSONArray): List<Alcoholic> {

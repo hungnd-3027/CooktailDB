@@ -20,8 +20,12 @@ class RemoteGlassDataSource : IGlassDataSource {
 
     private fun getGlasses(): List<Glass> {
         val jsonObject = JSONObject(httpConnection(ApiURL.getGlassList()))
-        val jsonArray = jsonObject.optJSONArray(ApiRespondConstant.DRINKS)
-        return getGlassFromJson(jsonArray)
+        return try {
+            val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
+            getGlassFromJson(jsonArray)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 
     private fun getGlassFromJson(jsonArray: JSONArray): List<Glass> {

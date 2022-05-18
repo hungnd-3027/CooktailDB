@@ -40,21 +40,12 @@ class DetailDrinkActivity :
         )
 
         val bundle = intent.extras
+        drink = bundle?.getSerializable(Constant.BUNDLE_DRINK) as Drink?
         val idDrink = bundle?.getString(Constant.BUNDLE_ID_DRINK)
-        if (idDrink != null) {
-            detailDrinkActivityPresenter?.getDrinkByID(idDrink)
-        } else {
-            detailDrinkActivityPresenter?.getRandomDrink()
-        }
 
-        idDrink?.let { detailDrinkActivityPresenter?.isFavorite(it) }
+        setDrinkToView(drink, idDrink)
 
-        binding?.apply {
-            buttonYoutube.setOnClickListener(this@DetailDrinkActivity)
-            buttonImageSource.setOnClickListener(this@DetailDrinkActivity)
-            buttonBackDetail.setOnClickListener(this@DetailDrinkActivity)
-            buttonFavoriteDetail.setOnClickListener(this@DetailDrinkActivity)
-        }
+        setView()
     }
 
     override fun getDrinkByIDSuccess(drinks: List<Drink>) {
@@ -116,6 +107,34 @@ class DetailDrinkActivity :
                     drink?.let { detailDrinkActivityPresenter?.insertDrink(it) }
                 }
             }
+        }
+    }
+
+    private fun setView() {
+        binding?.apply {
+            buttonYoutube.setOnClickListener(this@DetailDrinkActivity)
+            buttonImageSource.setOnClickListener(this@DetailDrinkActivity)
+            buttonBackDetail.setOnClickListener(this@DetailDrinkActivity)
+            buttonFavoriteDetail.setOnClickListener(this@DetailDrinkActivity)
+        }
+    }
+
+    private fun setDrinkToView(drink: Drink?, idDrink: String?) {
+        if (drink != null) {
+            drink.strVideo = Constant.NULL
+            drink.strImageSource = Constant.NULL
+            drink.apply {
+                bindData(this)
+                idDrink?.let { idDrink -> detailDrinkActivityPresenter?.isFavorite(idDrink) }
+            }
+            hideProgressBar()
+        } else {
+            if (!idDrink.isNullOrEmpty()) {
+                detailDrinkActivityPresenter?.getDrinkByID(idDrink)
+            } else {
+                detailDrinkActivityPresenter?.getRandomDrink()
+            }
+            idDrink?.let { detailDrinkActivityPresenter?.isFavorite(it) }
         }
     }
 

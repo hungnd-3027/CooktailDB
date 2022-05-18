@@ -19,8 +19,12 @@ class RemoteCategoryDataSource : ICategoryDataSource {
 
     private fun getCategories(): List<Category> {
         val jsonObject = JSONObject(httpConnection(ApiURL.getCategoryList()))
-        val jsonArray = jsonObject.optJSONArray(ApiRespondConstant.DRINKS)
-        return getCategoriesFromJson(jsonArray)
+        return try {
+            val jsonArray = jsonObject.getJSONArray(ApiRespondConstant.DRINKS)
+            getCategoriesFromJson(jsonArray)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 
     private fun getCategoriesFromJson(jsonArray: JSONArray): List<Category> {

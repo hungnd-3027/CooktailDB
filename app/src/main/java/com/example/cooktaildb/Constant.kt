@@ -27,6 +27,7 @@ object ApiDrinkConstant {
 object Constant {
     const val NULL = "null"
     const val BUNDLE_ID_DRINK = "BUNDLE_ID_DRINK"
+    const val BUNDLE_DRINK = "BUNDLE_DRINK"
 }
 
 object FilterType {
