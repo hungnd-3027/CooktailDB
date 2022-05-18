@@ -13,14 +13,14 @@ class FavoriteDrinkDAOImpl(databaseHelper: DatabaseHelper) : FavoriteDrinkDAO {
         val strIngredients = StringBuilder()
         drink.ingredients.apply {
             forEachIndexed { index, s ->
-                strIngredients.append(if (index < size - 1) appendPattern(s) else s)
+                strIngredients.append(if (index < size - 1) String.format(appendPattern, s) else s)
             }
         }
 
         val strMeasures = StringBuilder()
         drink.measures.apply {
             forEachIndexed { index, s ->
-                strMeasures.append(if (index < size - 1) appendPattern(s) else s)
+                strMeasures.append(if (index < size - 1) String.format(appendPattern, s) else s)
             }
         }
 
@@ -87,7 +87,8 @@ class FavoriteDrinkDAOImpl(databaseHelper: DatabaseHelper) : FavoriteDrinkDAO {
     }
 
     companion object {
-        fun appendPattern(s: String?): String = String.format("%s;", s)
+        const val appendPattern = "%s;"
+
         private var instance: FavoriteDrinkDAOImpl? = null
 
         fun getInstance(database: DatabaseHelper): FavoriteDrinkDAOImpl =

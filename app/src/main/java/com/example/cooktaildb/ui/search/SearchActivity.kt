@@ -26,6 +26,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     DrinkAdapter.OnItemClickListener {
 
     private var searchPresenter: SearchActivityPresenter? = null
+    private val drinks = mutableListOf<Drink>()
     private val drinkAdapter: DrinkAdapter by lazy {
         DrinkAdapter(this)
     }
@@ -46,6 +47,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
         binding?.apply {
             recyclerDrinkSearch.layoutManager = GridLayoutManager(this@SearchActivity, 2)
             recyclerDrinkSearch.adapter = drinkAdapter
+            editTextSearch.requestFocus()
             editTextSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     drinkAdapter.setData(mutableListOf())
@@ -71,8 +73,30 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     }
 
     override fun getDrinkSuccess(drinks: List<Drink>) {
+        this.drinks.clear()
+        this.drinks.addAll(drinks)
         binding?.textGetDataFailed?.visibility = if (drinks.isEmpty()) View.VISIBLE else View.GONE
         drinkAdapter.setData(drinks.toMutableList())
+        drinks.forEachIndexed { index, drink ->
+            drink.idDrink?.let { searchPresenter?.isFavorite(it, index) }
+        }
+    }
+
+    override fun insertDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_add_drink_to_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun isFavorite(result: Boolean, position: Int) {
+        drinks[position].isFavorite = result
+        drinkAdapter.setData(drinks)
+    }
+
+    override fun deleteDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_delete_drink_from_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getDrinkByIDSuccess(drinks: List<Drink>) {
+        searchPresenter?.insertDrink(drinks.first())
     }
 
     override fun showProgressBar() {
@@ -96,7 +120,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     }
 
     override fun onFavoriteClick(idDrink: String, isFavorite: Boolean, position: Int) {
-
+        if (isFavorite) {
+            searchPresenter?.deleteDrink(idDrink)
+        } else {
+            searchPresenter?.getDrinkByID(idDrink)
+        }
     }
 
     companion object {
