@@ -25,6 +25,8 @@ class DetailDrinkActivity :
     private var detailDrinkActivityPresenter: DetailDrinkActivityPresenter? = null
     private var mYoutubeLink: Uri? = null
     private var mImageResourceLink: Uri? = null
+    private var drink: Drink? = null
+    private var isFavorite = false
 
     override fun initData() {
         detailDrinkActivityPresenter = DetailDrinkActivityPresenter(
@@ -45,19 +47,41 @@ class DetailDrinkActivity :
             detailDrinkActivityPresenter?.getRandomDrink()
         }
 
+        idDrink?.let { detailDrinkActivityPresenter?.isFavorite(it) }
+
         binding?.apply {
             buttonYoutube.setOnClickListener(this@DetailDrinkActivity)
             buttonImageSource.setOnClickListener(this@DetailDrinkActivity)
             buttonBackDetail.setOnClickListener(this@DetailDrinkActivity)
+            buttonFavoriteDetail.setOnClickListener(this@DetailDrinkActivity)
         }
     }
 
     override fun getDrinkByIDSuccess(drinks: List<Drink>) {
+        drink = drinks.first()
         bindData(drinks.first())
     }
 
     override fun getRandomDrinkSuccess(drinks: List<Drink>) {
+        drink = drinks.first()
         bindData(drinks.first())
+    }
+
+    override fun insertDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_add_drink_to_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun deleteDrinkSuccess() {
+        Toast.makeText(this, R.string.msg_delete_drink_from_favorite, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun isFavorite(result: Boolean) {
+        isFavorite = result
+        if (result) {
+            binding?.buttonFavoriteDetail?.setImageResource(R.drawable.ic_star_yellow)
+        } else {
+            binding?.buttonFavoriteDetail?.setImageResource(R.drawable.ic_star_detail)
+        }
     }
 
     override fun showProgressBar() {
@@ -85,6 +109,13 @@ class DetailDrinkActivity :
                 }
             }
             R.id.button_back_detail -> finish()
+            R.id.button_favorite_detail -> {
+                if (isFavorite) {
+                    drink?.idDrink?.let { detailDrinkActivityPresenter?.deleteDrink(it) }
+                } else {
+                    drink?.let { detailDrinkActivityPresenter?.insertDrink(it) }
+                }
+            }
         }
     }
 
@@ -108,12 +139,12 @@ class DetailDrinkActivity :
             textInstruction.text = drink.strInstructions
             textIngredient.text = strIngredients
             textMeasures.text = strMeasures
-            if (drink.strVideo != null) {
+            if (drink.strVideo != Constant.NULL) {
                 mYoutubeLink = Uri.parse(drink.strVideo)
             } else {
                 buttonYoutube.visibility = View.GONE
             }
-            if (drink.strImageSource != null) {
+            if (drink.strImageSource != Constant.NULL) {
                 mImageResourceLink = Uri.parse(drink.strImageSource)
             } else {
                 buttonImageSource.visibility = View.GONE
