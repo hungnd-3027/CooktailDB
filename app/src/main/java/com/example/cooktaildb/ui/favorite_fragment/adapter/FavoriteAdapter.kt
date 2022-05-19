@@ -8,9 +8,11 @@ import com.bumptech.glide.Glide
 import com.example.cooktaildb.data.model.Drink
 import com.example.cooktaildb.databinding.ItemFavoriteBinding
 
-class FavoriteAdapter(private val context: Context) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
+class FavoriteAdapter(private val context: Context) :
+    RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     private val drinkList = mutableListOf<Drink>()
+    private var listener: OnItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -30,6 +32,10 @@ class FavoriteAdapter(private val context: Context) : RecyclerView.Adapter<Favor
         notifyDataSetChanged()
     }
 
+    fun setItemClickListener(listener: OnItemClick) {
+        this.listener = listener
+    }
+
     inner class ViewHolder(private val binding: ItemFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -39,7 +45,14 @@ class FavoriteAdapter(private val context: Context) : RecyclerView.Adapter<Favor
                 textFavoriteName.text = drink.strDrink
                 textFavoriteCategory.text = drink.strCategory
                 textGlass.text = drink.strGlass
+                root.setOnClickListener {
+                    listener?.onClick(drink)
+                }
             }
         }
+    }
+
+    interface OnItemClick {
+        fun onClick(drink: Drink)
     }
 }

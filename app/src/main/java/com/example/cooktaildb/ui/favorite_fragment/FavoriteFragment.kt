@@ -3,8 +3,10 @@ package com.example.cooktaildb.ui.favorite_fragment
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cooktaildb.Constant
 import com.example.cooktaildb.R
 import com.example.cooktaildb.base.BaseFragment
 import com.example.cooktaildb.data.model.Drink
@@ -14,12 +16,13 @@ import com.example.cooktaildb.data.source.local.LocalDrinkDataSource
 import com.example.cooktaildb.data.source.local.dao.FavoriteDrinkDAOImpl
 import com.example.cooktaildb.data.source.remote.RemoteDrinkDataSource
 import com.example.cooktaildb.databinding.FragmentFavoriteBinding
+import com.example.cooktaildb.ui.detail.DetailDrinkActivity
 import com.example.cooktaildb.ui.favorite_fragment.adapter.FavoriteAdapter
 import com.example.cooktaildb.ui.favorite_fragment.presenter.FavoriteFragmentContract
 import com.example.cooktaildb.ui.favorite_fragment.presenter.FavoriteFragmentPresenter
 
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteBinding::inflate),
-    FavoriteFragmentContract.View {
+    FavoriteFragmentContract.View, FavoriteAdapter.OnItemClick {
 
     private var presenter: FavoriteFragmentPresenter? = null
     private val adapter: FavoriteAdapter? by lazy {
@@ -57,6 +60,16 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteB
         Toast.makeText(context, R.string.msg_get_data_failed, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onClick(drink: Drink) {
+        context?.let {
+            DetailDrinkActivity.getIntent(it).also { intent ->
+                val bundle = bundleOf(Constant.BUNDLE_DRINK to drink)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        }
+    }
+
     private fun swipeItemToDelete() {
         val swipeToDeleteCallback = object : SwipeItemCallBack() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -81,6 +94,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteB
             ), this
         )
         presenter?.getAllDrink()
+        adapter?.setItemClickListener(this)
     }
 
     private fun initView() {
@@ -88,6 +102,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteB
             recyclerFavorite.adapter = adapter
         }
     }
+
 
     companion object {
         @JvmStatic
