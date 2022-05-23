@@ -78,7 +78,7 @@ class FilterFragmentPresenter(
     override fun getDrinkByAlcoholic(strAlcoholic: String) {
         drinkRepository.getDrinkByAlcoholic(strAlcoholic, object : OnRequestCallback<List<Drink>> {
             override fun onSuccess(data: List<Drink>) {
-                view.getDrinkByCategorySuccess(data)
+                view.getDrinkByAlcoholicSuccess(data)
             }
 
             override fun onFailed() {
@@ -90,7 +90,7 @@ class FilterFragmentPresenter(
     override fun getDrinkByGlass(strGlass: String) {
         drinkRepository.getDrinkByGlass(strGlass, object : OnRequestCallback<List<Drink>> {
             override fun onSuccess(data: List<Drink>) {
-                view.getDrinkByCategorySuccess(data)
+                view.getDrinkByGlassSuccess(data)
             }
 
             override fun onFailed() {
@@ -102,7 +102,7 @@ class FilterFragmentPresenter(
     override fun getDrinkByFirstLetter(letter: String) {
         drinkRepository.getDrinkByFirstLetter(letter, object : OnRequestCallback<List<Drink>> {
             override fun onSuccess(data: List<Drink>) {
-                view.getDrinkByCategorySuccess(data)
+                view.getDrinkByFirstLetterSuccess(data)
             }
 
             override fun onFailed() {

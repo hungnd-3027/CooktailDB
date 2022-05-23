@@ -9,5 +9,6 @@ class SplashScreenActivity : AppCompatActivity() {
         MainActivity.getIntent(this).also {
             startActivity(it)
         }
+        finish()
     }
 }

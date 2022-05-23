@@ -49,7 +49,7 @@ class DatabaseHelper(val context: Context?) :
             String.format("DROP TABLE IF EXISTS %s", TABLE_NAME)
 
         private var instance: DatabaseHelper? = null
-        private val lock = Any()
+
         fun getInstance(context: Context?) = instance ?: synchronized(this) {
             instance ?: DatabaseHelper(context).also { instance = it }
         }

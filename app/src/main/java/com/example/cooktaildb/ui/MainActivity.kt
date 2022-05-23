@@ -24,7 +24,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     NoInternetFragment.OnItemClick {
 
     private val networkReceiver = NetworkReceiver(this)
-
+    private var isFirstOpen = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding?.bottomNavigationView?.setOnItemSelectedListener(this)
@@ -32,11 +32,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun initData() {
-        addFragment(
-            if (NetworkUtils.isNetworkAvailable(this)) HomeFragment.newInstance() else FavoriteFragment.newInstance(),
-            R.id.frame_navigation,
-            FragmentConstant.HOME_FRAGMENT_TAG
-        )
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            isFirstOpen = false
+            addFragment(
+                HomeFragment.newInstance(),
+                R.id.frame_navigation,
+                FragmentConstant.HOME_FRAGMENT_TAG
+            )
+        } else {
+            binding?.bottomNavigationView?.visibility = View.GONE
+            addFragment(NoInternetFragment.newInstance(), R.id.frame_navigation, null)
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -48,13 +54,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 )
                 true
             }
-            R.id.menu_filter -> {
-                replaceAtRoot(
-                    FilterFragment.newInstance(),
-                    R.id.frame_navigation
-                )
-                true
-            }
             R.id.menu_favorite -> {
                 replaceAtRoot(
                     FavoriteFragment.newInstance(),
@@ -62,12 +61,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 )
                 true
             }
+            R.id.menu_filter -> {
+                replaceAtRoot(
+                    FilterFragment.newInstance(),
+                    R.id.frame_navigation
+                )
+                true
+            }
+
             else -> false
         }
     }
 
     override fun onNetworkChange(isNetworkConnected: Boolean) {
-        if (!isNetworkConnected) {
+        if (!isNetworkConnected && !isFirstOpen) {
             binding?.bottomNavigationView?.visibility = View.GONE
             replaceFragment(NoInternetFragment.newInstance(), R.id.frame_navigation, null)
         }
@@ -82,7 +89,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         supportFragmentManager.apply {
             if (backStackEntryCount >= 2) popBackStack()
             else Intent(this@MainActivity, MainActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(it)
             }
         }
