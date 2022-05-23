@@ -42,7 +42,7 @@ class DrinkAdapter(val context: Context) : RecyclerView.Adapter<DrinkAdapter.Vie
 
         fun bind(drink: Drink) {
             binding.apply {
-                Glide.with(context).load(drink.strDrinkThumb).into(imageDrink)
+                Glide.with(context).load(drink.strDrinkThumb).placeholder(R.drawable.bg_no_internet).into(imageDrink)
                 textDrink.text = drink.strDrink
                 root.setOnClickListener {
                     drink.idDrink?.let { idDrink -> listener?.onItemClick(idDrink) }
